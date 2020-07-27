@@ -108,6 +108,8 @@ Plug 'preservim/nerdtree'
 " setlocal spell
 set spelllang=en_us
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+
+Plug 'mattn/emmet-vim'
 call plug#end()
 
 
@@ -122,3 +124,13 @@ nnoremap <leader>srp :source %<cr>
 "autocmd VimEnter * NERDTree
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+imap <F5> <Esc>:w<CR>:!clear;python3 %<CR>
+nmap <F5> <Esc>:w<CR>:!clear;python3 %<CR>
+"autocmd Filetype python nnoremap <buffer> <F5> :w<CR>:ter python3 "%"<CR>
+autocmd Filetype python nnoremap <buffer> <F6> :w<CR>:vert ter python3 "%"<CR>
+
+"autocmd Filetype html set omnifunc=htmlcomplete
+
+" EMMET CONFIG
+let g:user_emmet_leader_key=','
