@@ -1,6 +1,7 @@
 " vim configuration
 set nocompatible
 set backspace=indent,eol,start
+set ruler
 
 " Color Scheme
 colorscheme slate
