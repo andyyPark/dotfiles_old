@@ -3,17 +3,14 @@ set nocompatible
 set backspace=indent,eol,start
 set ruler
 
-" Color Scheme
-colorscheme slate
-
 " Enable syntax processing
 syntax on
 
 " Spaces & Tabs
-set tabstop=2
-set softtabstop=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 set expandtab " tabs are spaces
-set shiftwidth=2
 set autoindent
 set smartindent
 set cindent
@@ -32,8 +29,6 @@ set incsearch
 set hlsearch
 set ignorecase
 set smartcase
-let mapleader=" "
-nnoremap <leader>, :noh<cr>
 
 " Movement
 nnoremap j gj
@@ -46,6 +41,7 @@ nnoremap s <nop>
 
 " Leader Shortcuts
 let mapleader=" "
+nnoremap <leader>, :noh<cr>
 inoremap jk <esc>
 
 " Split Navigations
@@ -87,48 +83,55 @@ set splitbelow
 set splitright
 
 call plug#begin('~/.vim/plugged')
+" Plugins
+Plug 'Raimondi/delimitMate'
+Plug 'Yggdroot/indentLine'
+Plug 'sheerun/vim-polyglot'
+Plug 'vimwiki/vimwiki'
 Plug 'lervag/vimtex'
     let g:tex_flavor='latex'
     let g:vimtex_view_method='zathura'
     let g:vimtex_quickfix_mode=0
     let g:vimtex_fold_enabled = 0
-
 Plug 'sirver/ultisnips'
     let g:UltiSnipsExpandTrigger = '<tab>'
     let g:UltiSnipsJumpForwardTrigger = '<tab>'
     let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
     let g:UltiSnipsSnippetDirectories=["/Users/andypark/.vim/plugged/ultisnips", "UltiSnips"]
     let g:UltiSnipsEditSplit="vertical"
-
 Plug 'KeitaNakamura/tex-conceal.vim'
     set conceallevel=1
     let g:tex_conceal='abdmg'
-
 Plug 'preservim/nerdtree'
+Plug 'mattn/emmet-vim'
+Plug 'dracula/vim',{'as':'dracula'}
+call plug#end()
+
+
+" Colorscheme
+colorscheme dracula
 
 " setlocal spell
 set spelllang=en_us
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
-Plug 'mattn/emmet-vim'
-call plug#end()
-
-
-" Plugins
 function! FixSpellingError()
-  normal! mm[s1z=`m
+   set spell
+   normal! mm[s1z=`m
 endfunction
+
 nnoremap <leader>sp :call FixSpellingError()<cr>
 nnoremap <leader>srp :source %<cr>
 
-"  NerdTree
-"autocmd VimEnter * NERDTree
-map <C-n> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" NerdTree
+" autocmd VimEnter * NERDTree
+" map <C-n> :NERDTreeToggle<CR>
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" Run python scripts
 imap <F5> <Esc>:w<CR>:!clear;python3 %<CR>
 nmap <F5> <Esc>:w<CR>:!clear;python3 %<CR>
-"autocmd Filetype python nnoremap <buffer> <F5> :w<CR>:ter python3 "%"<CR>
+" autocmd Filetype python nnoremap <buffer> <F5> :w<CR>:ter python3 "%"<CR>
 autocmd Filetype python nnoremap <buffer> <F6> :w<CR>:vert ter python3 "%"<CR>
 
 "autocmd Filetype html set omnifunc=htmlcomplete
