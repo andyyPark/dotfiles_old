@@ -4,6 +4,7 @@ set backspace=indent,eol,start
 set ruler
 
 " Enable syntax processing
+filetype plugin on
 syntax on
 
 " Spaces & Tabs
@@ -88,6 +89,8 @@ Plug 'Raimondi/delimitMate'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'vimwiki/vimwiki'
+    let g:vimwiki_list = [{'path': '~/vimwiki/',
+                            \ 'syntax': 'markdown', 'ext': '.md'}]
 Plug 'lervag/vimtex'
     let g:tex_flavor='latex'
     let g:vimtex_view_method='zathura'
