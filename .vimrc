@@ -1,7 +1,9 @@
 " vim configuration
 set nocompatible
 set backspace=indent,eol,start
-set ruler
+set noerrorbells
+set spelllang=en_us
+set spell
 
 " Enable syntax processing
 filetype plugin on
@@ -20,6 +22,7 @@ set cindent
 set number
 set showcmd
 set cursorline
+set ruler
 filetype indent on
 set wildmenu
 set lazyredraw
@@ -36,35 +39,47 @@ nnoremap j gj
 nnoremap k gk
 nnoremap B ^
 nnoremap E $
-nnoremap ^ <nop>
-nnoremap $ <nop>
-nnoremap s <nop>
+nnoremap ^ <Nop>
+nnoremap $ <Nop>
+nnoremap s <Nop>
 
 " Leader Shortcuts
 let mapleader=" "
-nnoremap <leader>, :noh<cr>
+nnoremap <leader>, :noh<CR>
 inoremap jk <esc>
 
 " Split Navigations
+set splitbelow
+set splitright
+nnoremap <C-V> :vnew<Space>
+nnoremap <C-Bslash> :new<Space>
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+nnoremap v- :vertical resize -2<CR>
+nnoremap v= :vertical resize +2<CR>
+nnoremap h- :resize -2<CR>
+nnoremap h= :resize +2<CR>
 
-nnoremap <leader><tab> :e#<cr>
-nnoremap close :bp<cr>:bd #<cr>
-nnoremap exit :q<cr>
-nnoremap sout :wq<cr>
-nnoremap tclose :tabclose<cr>
-nnoremap ,1 1gt<cr>
-nnoremap ,2 2gt<cr>
-nnoremap ,3 3gt<cr>
-nnoremap ,4 3gt<cr>
-nnoremap ,5 3gt<cr>
-nnoremap ,6 3gt<cr>
-nnoremap ,7 3gt<cr>
-nnoremap ,8 3gt<cr>
-nnoremap ,9 3gt<cr>
+" Tabs
+nnoremap <C-T> :tabnew<Space>
+" nnoremap <leader><tab> :e#<CR>
+nnoremap close :bp<CR>:bd #<CR>
+nnoremap exit :q<CR>
+nnoremap sout :wq<CR>
+nnoremap tclose :tabclose<CR>
+nnoremap ,1 1gt<CR>
+nnoremap ,2 2gt<CR>
+nnoremap ,3 3gt<CR>
+nnoremap ,4 3gt<CR>
+nnoremap ,5 3gt<CR>
+nnoremap ,6 3gt<CR>
+nnoremap ,7 3gt<CR>
+nnoremap ,8 3gt<CR>
+nnoremap ,9 3gt<CR>
+
+" Buffers
 nnoremap <Leader>l :ls<CR>
 nnoremap <Leader>b :bp<CR>
 nnoremap <Leader>f :bn<CR>
@@ -80,39 +95,43 @@ nnoremap <Leader>8 :8b<CR>
 nnoremap <Leader>9 :9b<CR>
 nnoremap <Leader>0 :10b<CR>
 
-set splitbelow
-set splitright
-
-call plug#begin('~/.vim/plugged')
 " Plugins
+call plug#begin('~/.vim/plugged')
+
 Plug 'Raimondi/delimitMate'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'vimwiki/vimwiki'
     let g:vimwiki_list = [{'path': '~/vimwiki/',
                             \ 'syntax': 'markdown', 'ext': '.md'}]
-Plug 'lervag/vimtex'
-    let g:tex_flavor='latex'
-    let g:vimtex_view_method='zathura'
-    let g:vimtex_quickfix_mode=0
-    let g:vimtex_fold_enabled = 0
-Plug 'sirver/ultisnips'
-    let g:UltiSnipsExpandTrigger = '<tab>'
-    let g:UltiSnipsJumpForwardTrigger = '<tab>'
-    let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-    let g:UltiSnipsSnippetDirectories=["/Users/andypark/.vim/plugged/ultisnips", "UltiSnips"]
-    let g:UltiSnipsEditSplit="vertical"
 Plug 'KeitaNakamura/tex-conceal.vim'
     set conceallevel=1
     let g:tex_conceal='abdmg'
 Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mattn/emmet-vim'
 Plug 'dracula/vim',{'as':'dracula'}
-call plug#end()
+Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
 
+call plug#end()
 
 " Colorscheme
 colorscheme dracula
+
+" NERDTree
+nnoremap <C-N> :NERDTreeToggle<CR>
+autocmd vimenter * NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+let g:NERDTreeNaturalSort=1
+let g:NERDTreeChDirMode=2
+let g:NERDTreeShowHidden=1
+
+" Fugitive
+nnoremap gs :Git<CR>
+
 
 " setlocal spell
 set spelllang=en_us
@@ -123,15 +142,11 @@ function! FixSpellingError()
    normal! mm[s1z=`m
 endfunction
 
-nnoremap <leader>sp :call FixSpellingError()<cr>
-nnoremap <leader>srp :source %<cr>
+nnoremap <leader>sp :call FixSpellingError()<CR>
+nnoremap <leader>srp :source %<CR>
 
-" NerdTree
-" autocmd VimEnter * NERDTree
-" map <C-n> :NERDTreeToggle<CR>
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" Run python scripts
+" Run python sCRipts
 imap <F5> <Esc>:w<CR>:!clear;python3 %<CR>
 nmap <F5> <Esc>:w<CR>:!clear;python3 %<CR>
 " autocmd Filetype python nnoremap <buffer> <F5> :w<CR>:ter python3 "%"<CR>
@@ -141,3 +156,5 @@ autocmd Filetype python nnoremap <buffer> <F6> :w<CR>:vert ter python3 "%"<CR>
 
 " EMMET CONFIG
 let g:user_emmet_leader_key=','
+set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim
+
