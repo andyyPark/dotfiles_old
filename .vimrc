@@ -113,25 +113,37 @@ Plug 'mattn/emmet-vim'
 Plug 'dracula/vim',{'as':'dracula'}
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
+Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'dense-analysis/ale'
 
 call plug#end()
 
 " Colorscheme
 colorscheme dracula
 
-" NERDTree
+" NERDTree Config
 nnoremap <C-N> :NERDTreeToggle<CR>
 autocmd vimenter * NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-let g:NERDTreeNaturalSort=1
-let g:NERDTreeChDirMode=2
-let g:NERDTreeShowHidden=1
+autocmd VimEnter * if argc() == 1 | NERDTree | wincmd p | else | NERDTree | endif
+let g:NERDTreeNaturalSort = 1
+let g:NERDTreeChDirMode = 2
+let g:NERDTreeShowHidden = 1
 
-" Fugitive
+" Ale Config
+let g:ale_linters = {'python': ['flake8', 'pylint']}
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'python': ['black'],
+\}
+let g:ale_fix_on_save = 1
+
+" Fugitive Config
 nnoremap gs :Git<CR>
-
 
 " setlocal spell
 set spelllang=en_us
@@ -157,4 +169,3 @@ autocmd Filetype python nnoremap <buffer> <F6> :w<CR>:vert ter python3 "%"<CR>
 " EMMET CONFIG
 let g:user_emmet_leader_key=','
 set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim
-
