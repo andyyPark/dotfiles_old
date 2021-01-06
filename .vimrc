@@ -4,6 +4,11 @@ set backspace=indent,eol,start
 set noerrorbells
 set spelllang=en_us
 set spell
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swap//
+set undodir=~/.vim/undo//
+set timeoutlen=1000
+set ttimeoutlen=0
 
 " Enable syntax processing
 filetype plugin on
@@ -19,7 +24,7 @@ set smartindent
 set cindent
 
 " UI configuration
-set number
+set number relativenumber
 set showcmd
 set cursorline
 set ruler
@@ -33,6 +38,9 @@ set incsearch
 set hlsearch
 set ignorecase
 set smartcase
+
+" Yank/Copy
+vnoremap <C-Y> "*yy
 
 " Movement
 nnoremap j gj
@@ -57,10 +65,10 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-nnoremap v- :vertical resize -2<CR>
-nnoremap v= :vertical resize +2<CR>
-nnoremap h- :resize -2<CR>
-nnoremap h= :resize +2<CR>
+nnoremap -v :vertical resize -2<CR>
+nnoremap =v :vertical resize +2<CR>
+nnoremap -h :resize -2<CR>
+nnoremap =h :resize +2<CR>
 
 " Tabs
 nnoremap <C-T> :tabnew<Space>
@@ -162,7 +170,7 @@ nnoremap <leader>srp :source %<CR>
 imap <F5> <Esc>:w<CR>:!clear;python3 %<CR>
 nmap <F5> <Esc>:w<CR>:!clear;python3 %<CR>
 " autocmd Filetype python nnoremap <buffer> <F5> :w<CR>:ter python3 "%"<CR>
-autocmd Filetype python nnoremap <buffer> <F6> :w<CR>:vert ter python3 "%"<CR>
+autocmd Filetype python nnoremap <buffer> <Leader>r :w<CR>:vert ter python3 "%"<CR>
 
 "autocmd Filetype html set omnifunc=htmlcomplete
 
